@@ -18,6 +18,11 @@ curso = {
 }
 
 
+# Criando o primeiro endpoint GET
+@app.get('/cursos')
+async def get_cursos():
+    return curso
+
 # Criando chamada de execução
 if __name__ == '__main__':
     import uvicorn
