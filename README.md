@@ -1,7 +1,7 @@
 # FastAPI APIs Modernas e Assíncronas com Python  
 ## Curso pela Udemy
 
-🎓 **Aluno:** Seu Nome Aqui  
+🎓 **Aluno:** Paulo Carvalho  
 📅 **Data de início:** 2025-11-06  
 📌 **Repositório:** `API-FASTAPI`  
 
