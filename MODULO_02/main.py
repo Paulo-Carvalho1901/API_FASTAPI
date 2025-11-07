@@ -24,6 +24,12 @@ cursos = {
 async def get_cursos():
     return cursos
 
+
+# Criando endpoint GET curso_id
+@app.get('/curso/{curso_id}')
+async def get_curso(curso_id):
+    ...
+
 # Criando chamada de execução
 if __name__ == '__main__':
     import uvicorn
