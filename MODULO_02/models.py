@@ -17,6 +17,17 @@ Pydantic funciona baseado em tipagem (type hints do Python).
 from typing import Optional # Notação de tipos
 
 
+"""
+O que é o BaseModel?
+BaseModel é a classe principal do Pydantic.
+
+Criar modelos de dados estruturados
+Validar automaticamente os tipos dos atributos
+Converter valores para o tipo correto
+Fornecer métodos úteis (ex.: .dict(), .json())
+Garantir segurança e consistência ao trabalhar com dados externos (ex.: API)
+
+"""
 """Quando criamos uma classe herdando dela, ganhamos automaticamente validação de dados"""
 from pydantic import BaseModel
 
