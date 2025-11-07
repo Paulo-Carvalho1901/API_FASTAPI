@@ -20,6 +20,7 @@ curso = {
 
 # Criando o primeiro endpoint GET
 @app.get('/cursos')
+# Funções assíncronas são úteis para lidar com operações que podem demorar (como acesso a banco de dados).
 async def get_cursos():
     return curso
 
