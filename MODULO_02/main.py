@@ -26,9 +26,13 @@ async def get_cursos():
 
 
 # Criando endpoint GET curso_id
-@app.get('/curso/{curso_id}')
-async def get_curso(curso_id):
-    ...
+@app.get('/cursos/{curso_id}') # parâmetro curso_id
+async def get_curso(curso_id: int): # utilizando o parâmetro curso_id e informando que ele é inteiro
+    curso = cursos[curso_id] # criado variável curso que recbe cursos com o parâmtro curso_id
+    curso.update({"id": curso_id}) # atualizando curso
+
+    return curso # retorno variavel 'curso' que recebe o cursos (banco Fake em memória) atualizado 
+
 
 # Criando chamada de execução
 if __name__ == '__main__':
