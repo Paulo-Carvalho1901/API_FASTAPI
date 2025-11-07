@@ -18,7 +18,7 @@ curso = {
 }
 
 
-# Criando 
+# Criando chamada de execução
 if __name__ == '__main__':
     import uvicorn
 
