@@ -4,7 +4,7 @@ from fastapi import FastAPI
 app = FastAPI() # instanciando FastAPI
 
 # criado banco em memória
-curso = {
+cursos = {
     1: {
         "titulo": "Programação para leigos",
         "aulas": 112,
@@ -22,7 +22,7 @@ curso = {
 @app.get('/cursos')
 # Funções assíncronas são úteis para lidar com operações que podem demorar (como acesso a banco de dados).
 async def get_cursos():
-    return curso
+    return cursos
 
 # Criando chamada de execução
 if __name__ == '__main__':
