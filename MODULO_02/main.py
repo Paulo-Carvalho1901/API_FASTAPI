@@ -1,4 +1,4 @@
-from fastapi import FastAPI
+from fastapi import FastAPI, HTTPException, status
 
 
 app = FastAPI() # instanciando FastAPI
@@ -28,10 +28,13 @@ async def get_cursos():
 # Criando endpoint GET curso_id
 @app.get('/cursos/{curso_id}') # endpoint cursos/curso_id, parâmetro curso_id
 async def get_curso(curso_id: int): # utilizando o parâmetro curso_id e informando que ele é inteiro
-    curso = cursos[curso_id] # criado variável curso que recebe cursos com o parâmtro curso_id
-    curso.update({"id": curso_id}) # atualizando curso
-
-    return curso # retorno variavel 'curso' que recebe o cursos (banco Fake em memória) atualizado 
+    # tratando o erro de keyError
+    try:
+        curso = cursos[curso_id] # criado variável curso que recebe cursos com o parâmtro curso_id
+        return curso # retorno variavel 'curso' que recebe o cursos (banco Fake em memória) atualizado 
+    except KeyError:
+        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail='Curso não encontrado!')
+   
 
 
 # Criando chamada de execução
