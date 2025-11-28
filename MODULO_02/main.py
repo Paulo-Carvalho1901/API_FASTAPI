@@ -1,4 +1,6 @@
 from fastapi import FastAPI, HTTPException, status
+from fastapi.responses import JSONResponse
+from fastapi import Response
 
 from models import Curso
 
@@ -57,6 +59,18 @@ async def put_curso(curso_id: int, curso: Curso):
         return curso
     else:
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail=f'Não existe um curso com ID {curso_id}')
+
+
+# Criando endpoint DELETE
+@app.delete('/cursos/{curso_id}')
+async def delete_curso(curso_id: int):
+    if curso_id in cursos:
+        del cursos[curso_id]
+        # return JSONResponse(status_code=status.HTTP_204_NO_CONTENT)
+        return Response(status_code=status.HTTP_204_NO_CONTENT)
+    else:
+        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail=f'Não existe curso com isso ID {curso_id}')
+
 
 # Criando chamada de execução
 if __name__ == '__main__':
