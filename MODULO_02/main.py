@@ -1,6 +1,7 @@
 from fastapi import FastAPI, HTTPException, status
 from fastapi.responses import JSONResponse
 from fastapi import Response
+from fastapi import Path
 
 from models import Curso
 
@@ -31,7 +32,8 @@ async def get_cursos():
 
 # Criando endpoint GET curso_id
 @app.get('/cursos/{curso_id}') # endpoint cursos/curso_id, parâmetro curso_id
-async def get_curso(curso_id: int): # utilizando o parâmetro curso_id e informando que ele é inteiro
+async def get_curso(curso_id: int = Path(title='ID do curso', description='Deve ser entre entre 1 e 2', gt=0, lt=3)): # utilizando o parâmetro curso_id e informando que ele é inteiro
+
     # tratando o erro de keyError
     try:
         curso = cursos[curso_id] # criado variável curso que recebe cursos com o parâmtro curso_id
