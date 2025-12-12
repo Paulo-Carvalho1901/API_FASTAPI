@@ -1,12 +1,22 @@
-from typing import Optional, List
+from typing import Optional, List, Any
 
 from fastapi import FastAPI, HTTPException, status
 from fastapi.responses import JSONResponse
 from fastapi import Response
-from fastapi import Path, Query, Header
+from fastapi import Path, Query, Header, Depends
+
+from time import sleep
 
 from models import Curso
 
+# Simulando conexão com banco de dados
+def fake_db():
+    try:
+        print('Abrindo conexão com banco de dados...')
+        sleep(1)
+    finally:
+        print('Fechando conexão do banco de daods.')
+        sleep(1)
 
 app = FastAPI() # instanciando FastAPI
 
@@ -28,13 +38,13 @@ cursos = {
 # Criando o primeiro endpoint GET
 @app.get('/cursos')
 # Funções assíncronas são úteis para lidar com operações que podem demorar (como acesso a banco de dados).
-async def get_cursos():
+async def get_cursos(db: Any = Depends(fake_db)): # Injeção de dependencia
     return cursos
 
 
 # Criando endpoint GET curso_id
 @app.get('/cursos/{curso_id}') # endpoint cursos/curso_id, parâmetro curso_id
-async def get_curso(curso_id: int = Path(title='ID do curso', description='Deve ser entre entre 1 e 2', gt=0, lt=3)): # utilizando o parâmetro curso_id e informando que ele é inteiro
+async def get_curso(curso_id: int = Path(title='ID do curso', description='Deve ser entre entre 1 e 2', gt=0, lt=3), db: Any = Depends(fake_db)): # utilizando o parâmetro curso_id e informando que ele é inteiro
 
     # tratando o erro de keyError
     try:
@@ -46,7 +56,7 @@ async def get_curso(curso_id: int = Path(title='ID do curso', description='Deve 
 
 # Criando endpoint POST
 @app.post('/cursos', status_code=status.HTTP_201_CREATED)
-async def post_curso(curso: Curso):
+async def post_curso(curso: Curso, db: Any = Depends(fake_db)): # Injeção de dependencia
     next_id: int = len(cursos) + 1
     cursos[next_id] = curso
     del curso.id
@@ -55,7 +65,7 @@ async def post_curso(curso: Curso):
 
 # Criando endpoint PUT
 @app.put('/cursos/{curso_id}')
-async def put_curso(curso_id: int, curso: Curso):
+async def put_curso(curso_id: int, curso: Curso, db: Any = Depends(fake_db)): # Injeção de dependencia
     if curso_id in cursos:
         cursos[curso_id] = curso
         del curso.id
@@ -67,7 +77,7 @@ async def put_curso(curso_id: int, curso: Curso):
 
 # Criando endpoint DELETE
 @app.delete('/cursos/{curso_id}')
-async def delete_curso(curso_id: int):
+async def delete_curso(curso_id: int, db: Any = Depends(fake_db)): # Injeção de dependencia
     if curso_id in cursos:
         del cursos[curso_id]
         # return JSONResponse(status_code=status.HTTP_204_NO_CONTENT)
