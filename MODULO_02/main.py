@@ -3,7 +3,7 @@ from typing import Optional, List
 from fastapi import FastAPI, HTTPException, status
 from fastapi.responses import JSONResponse
 from fastapi import Response
-from fastapi import Path, Query
+from fastapi import Path, Query, Header
 
 from models import Curso
 
@@ -77,10 +77,12 @@ async def delete_curso(curso_id: int):
 
 
 @app.get('/calculadora')
-async def calcular(a: int = Query(default=None, gt=5), b: int = Query(default=None, gt=10), c: Optional[int] = None):
+async def calcular(a: int = Query(default=None, gt=5), b: int = Query(default=None, gt=10), x_geek: str = Header(default=None), c: Optional[int] = None):
     soma: int = a + b
     if c:
         soma = soma + c
+
+    print(f'X-GEEK: {x_geek}')
 
     return {'Resultado': soma}
 
